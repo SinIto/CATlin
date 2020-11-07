@@ -11,26 +11,29 @@ object MainScenario : Scenario() {
     init {
         state("start") {
             activators {
-                regex("/start")
+                regex(".start")
                 intent("Hello")
             }
             action {
                 reactions.run {
-                    image("https://media.giphy.com/media/ICOgUNjpvO0PC/source.gif")
+                    // image("https://media.giphy.com/media/ICOgUNjpvO0PC/source.gif")
                     sayRandom(
                         "Hello! How can I help?",
                         "Hi there! How can I help you?"
                     )
-                    buttons(
-                        "Help me!",
-                        "How are you?",
-                        "What is your name?"
-                    )
+                    // buttons(
+                    //     "Help me!",
+                    //     "How are you?",
+                    //     "What is your name?"
+                    // )
                 }
                 // reactions.aimybox?.response?.data?.put("key", json { "some nested key" to "some nested value" })
                 // reactions.aimybox?.response?.data?.put("boolean", JsonPrimitive(false))
-                reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("Smile"))
-                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(1))
+                reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinSmile.png"))
+                // CatlinSadCry.png
+                // CatlinStars.png
+                // CatlinHearts.png
+                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(0))
             }
         }
 
@@ -44,7 +47,7 @@ object MainScenario : Scenario() {
                     "See you soon!",
                     "Bye-bye!"
                 )
-                reactions.image("https://media.giphy.com/media/EE185t7OeMbTy/source.gif")
+                // reactions.image("https://media.giphy.com/media/EE185t7OeMbTy/source.gif")
             }
         }
 
@@ -62,8 +65,8 @@ object MainScenario : Scenario() {
 
         state("help") {
             activators {
-                regex("/help")
-                regex("/menu")
+                regex(".help")
+                regex(".menu")
                 intent("Help")
             }
 
