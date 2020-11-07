@@ -28,6 +28,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback")
 
     implementation("com.justai.jaicf:core:$jaicf")
+    implementation("com.justai.jaicf:aimybox:$jaicf")
     implementation("com.justai.jaicf:jaicp:$jaicf")
     implementation("com.justai.jaicf:caila:$jaicf")
 }

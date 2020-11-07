@@ -25,3 +25,5 @@ If you would like to deploy this project to the Heroku cloud, just click on the 
 3. That's it! Now all the channels will communicate through your bot deployed to Heroku.
 
 > You can switch project back to long polling instead of webhook once you need to route all messages to your local machine during development.
+
+Also use: https://github.com/davidsbatista/lexicons for English names dictionary

@@ -1,5 +1,6 @@
 package com.justai.jaicf.template.connections
 
+import com.justai.jaicf.channel.aimybox.AimyboxChannel
 import com.justai.jaicf.channel.jaicp.JaicpPollingConnector
 import com.justai.jaicf.channel.jaicp.channels.ChatApiChannel
 import com.justai.jaicf.channel.jaicp.channels.ChatWidgetChannel
@@ -14,7 +15,8 @@ fun main() {
         channels = listOf(
             ChatApiChannel,
             ChatWidgetChannel,
-            TelephonyChannel
+            TelephonyChannel,
+            AimyboxChannel
         )
     ).runBlocking()
 }
