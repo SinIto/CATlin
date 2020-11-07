@@ -1,7 +1,10 @@
 package com.justai.jaicf.template.scenario
 
 import com.justai.jaicf.activator.caila.caila
+import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.model.scenario.Scenario
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.json
 
 object MainScenario : Scenario() {
 
@@ -24,9 +27,9 @@ object MainScenario : Scenario() {
                         "What is your name?"
                     )
                 }
-                //reactions.aimybox {
-                //    image = "sad"
-                //}
+                reactions.aimybox?.response?.data?.put("key", json { "some nested key" to "some nested value" })
+                // reactions.aimybox?.response?.data?.put("boolean", JsonPrimitive(false))
+                // reactions.aimybox?.response?.data?.put("number", JsonPrimitive(14))
             }
         }
 
