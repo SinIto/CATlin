@@ -18,6 +18,7 @@ object MainScenario : Scenario() {
                         "Hello! How can I help?",
                         "Hi there! How can I help you?"
                     )
+                    $response.data.image = "Smile";
                     buttons(
                         "Help me!",
                         "How are you?",
@@ -50,6 +51,20 @@ object MainScenario : Scenario() {
                 activator.caila?.topIntent?.answer?.let {
                     reactions.say(it)
                 }
+            }
+        }
+
+        state("bye") {
+            activators {
+                intent("Bye")
+            }
+
+            action {
+                reactions.sayRandom(
+                    "See you soon!",
+                    "Bye-bye!"
+                )
+                reactions.image("https://media.giphy.com/media/EE185t7OeMbTy/source.gif")
             }
         }
 
