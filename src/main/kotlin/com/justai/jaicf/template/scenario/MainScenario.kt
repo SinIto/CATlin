@@ -53,24 +53,26 @@ object MainScenario : Scenario() {
             state("Names") {
                 activators {
                     intent("Names")
-                    regex("\\w+")
+                    regex("@\"^\b[a-zA-Z0-9_]+\b$") // "\\w+"
                 }
                 action {
                     val cailaName = activator.caila?.entities?.find { it.entity == "Names" }?.value
-
-                    if (cailaName != null){
+                    if (cailaName != null) {
+                        context.client["ClientName"] = JsonPrimitive(cailaName)
+                    }
+                    if (context.client["ClientName"] != null){
                         reactions.sayRandom(
-                            "Nice to hear you "  + cailaName + "! I’m Catlin. I was designed to cheer up programmers while coding in Kotlin. I know that it can be stressful sometimes. So you can complain to me about everything. I can also tell you some interesting things about Kotlin. May I ask you about your level of Kotlin knowledge? Are you a newbie?",
-                            "Hey, "  + cailaName + ", glad to meet. I’m Catlin. My mission is to support programmers in learning Kotlin emotionally. It can be stressful and painful sometimes. May I ask you about your level of Kotlin knowledge? Are you a newbie?",
-                            "Beautiful name! Nice to see you " + cailaName + ". I’m Catlin.I was designed to cheer up programmers while coding in Kotlin. I know that it can be stressful sometimes. May I ask you about your level of Kotlin knowledge? Are you a newbie?"
+                            "Nice to hear you "  + context.client["ClientName"] + "! I’m Catlin. I was designed to cheer up programmers while coding in Kotlin. I know that it can be stressful sometimes. So you can complain to me about everything. I can also tell you some interesting things about Kotlin. May I ask you about your level of Kotlin knowledge? Are you a newbie?",
+                            "Hey, "  + context.client["ClientName"] + ", glad to meet. I’m Catlin. My mission is to support programmers in learning Kotlin emotionally. It can be stressful and painful sometimes. May I ask you about your level of Kotlin knowledge? Are you a newbie?",
+                            "Beautiful name! Nice to see you " + context.client["ClientName"] + ". I’m Catlin.I was designed to cheer up programmers while coding in Kotlin. I know that it can be stressful sometimes. May I ask you about your level of Kotlin knowledge? Are you a newbie?"
                         )
                         reactions.go("/Level")
                         //reactions.changeState("../asdasda")
                     } else {
-                        context?.session?.put("name",JsonPrimitive(request.input))
+                        context.temp["name"] = JsonPrimitive(request.input)
                         reactions.sayRandom(
-                            "Are you realy have name "  + context.session["name"] + "?",
-                            "Are you realy "  + context.session["name"] + "?"
+                            "Are you really have name "  + context.temp["name"] + "?",
+                            "Are you really "  + context.temp["name"] + "?"
                         )
                     }
                     // reactions.image("https://media.giphy.com/media/EE185t7OeMbTy/source.gif")
@@ -81,15 +83,22 @@ object MainScenario : Scenario() {
                         intent("Yes")
                     }
                     action {
-                        //BotContext.client["name"], JsonPrimitive(name))
-                        reactions.sayRandom(
-                            "Are you really have name "  + context.session["name"] + "?",
-                            "Are you really "  + context.session["name"] + "?"
-                        )
-                        // reactions.image("https://media.giphy.com/media/EE185t7OeMbTy/source.gif")
+                        context.client["ClientName"] = context.temp["name"]
+                        reactions.go("/Level")
                     }
+                }
 
-
+                state("No") {
+                    activators {
+                        intent("No")
+                    }
+                    action {
+                        reactions.sayRandom(
+                            "What is your name, really?",
+                            "How can I call you?"
+                        )
+                        reactions.changeState("/Names")
+                    }
                 }
 
             }
