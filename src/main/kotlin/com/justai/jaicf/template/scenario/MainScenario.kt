@@ -27,9 +27,10 @@ object MainScenario : Scenario() {
                         "What is your name?"
                     )
                 }
-                reactions.aimybox?.response?.data?.put("key", json { "some nested key" to "some nested value" })
+                // reactions.aimybox?.response?.data?.put("key", json { "some nested key" to "some nested value" })
                 // reactions.aimybox?.response?.data?.put("boolean", JsonPrimitive(false))
-                // reactions.aimybox?.response?.data?.put("number", JsonPrimitive(14))
+                reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("Smile"))
+                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(1))
             }
         }
 
