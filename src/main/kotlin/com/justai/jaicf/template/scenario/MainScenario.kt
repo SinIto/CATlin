@@ -8,25 +8,16 @@ import kotlinx.serialization.json.JsonPrimitive
 
 object MainScenario : Scenario() {
 
-    // reactions.aimybox?.response?.data?.put("key", json { "some nested key" to "some nested value" })
-
-    // image("https://media.giphy.com/media/ICOgUNjpvO0PC/source.gif")
-
-    // buttons(
-    //     "Help me!",
-    //     "How are you?",
-    //     "What is your name?"
-    // )
     init {
         state("Greetings") {
             activators {
-                regex(".start")
+                regex(".?start")
                 intent("Greetings")
             }
             action {
                 context.client["bar"] = 0
                 reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinSmile.png"))
-                reactions.aimybox?.response?.data?.put("bar", context.client["bar"] as JsonElement)
+                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
                 if (context.client["ClientName"] != null){
                     reactions.go("/Greetings/Name/Names")
                 }
@@ -52,10 +43,10 @@ object MainScenario : Scenario() {
                         }
                         if (context.client["ClientName"] != null) {
                             context.client["bar"] = context.client["bar"] as Int + 16
-                            reactions.aimybox?.response?.data?.put("bar", context.client["bar"] as JsonElement)
+                            reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
                             if (context.client["bar"] as Int >= 96) {
                                 context.client["bar"] = 100
-                                reactions.aimybox?.response?.data?.put("bar", context.client["bar"] as JsonElement)
+                                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
                                 reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
                             } // CatlinSadCry.png // CatlinStars.png
                             reactions.sayRandom(
@@ -128,8 +119,8 @@ object MainScenario : Scenario() {
 
         state("help") {
             activators {
-                regex(".help")
-                regex(".menu")
+                regex(".?help")
+                regex(".?menu")
                 intent("Help")
             }
 
@@ -149,7 +140,7 @@ object MainScenario : Scenario() {
 
         state("reset") {
             activators {
-                regex(".reset")
+                regex(".?reset")
                 intent("Reset")
             }
 
