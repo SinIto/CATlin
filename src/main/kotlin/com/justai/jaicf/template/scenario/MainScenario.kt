@@ -139,9 +139,9 @@ object MainScenario : Scenario() {
                     "To control:"
                 )
                 reactions.say(
-                    "1. \"\\start \" to go to start" +
-                            "\n 2. \"\\help\" to get some information" +
-                            "\n 3. \"\\reset\" to start a new game"
+                    "1. \"/start \" to go to start" +
+                            "\n 2. \"/help\" to get some information" +
+                            "\n 3. \"/reset\" to start a new game"
                 )
                 // reactions.image("https://media.giphy.com/media/EE185t7OeMbTy/source.gif")
             }
