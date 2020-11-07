@@ -102,6 +102,7 @@ object MainScenario : Scenario() {
             state("LevelNewbie") {
                 activators {
                     intent("LevelNewbie")
+                    intent("Yes")
                 }
                 action {
                     context.client["bar"] = context.client["bar"] as Int + 16
@@ -139,6 +140,16 @@ object MainScenario : Scenario() {
             activators {
                 intent("CreationStory")
             }
+            state("UserTellsCreationStory") {
+                activators {
+                    intent("UserTellsCreationStory")
+                    intent("Junction")
+                    intent("JAICF")
+                }
+                action {
+                    reactions.go("../Yes/UserTellsCreationStory")
+                }
+            }
             state("Yes") {
                 activators {
                     intent("Yes")
@@ -149,6 +160,7 @@ object MainScenario : Scenario() {
 
                 state("UserTellsCreationStory") {
                     activators {
+                        intent("UserTellsCreationStory")
                         intent("Junction")
                         intent("JAICF")
                     }
@@ -365,6 +377,7 @@ object MainScenario : Scenario() {
         state("ConversationEnd") {
             activators {
                 intent("ConversationEnd")
+                regex(".?exit")
             }
             action {
                 reactions.say("Ok! I will be glad to talk with you later. ")
