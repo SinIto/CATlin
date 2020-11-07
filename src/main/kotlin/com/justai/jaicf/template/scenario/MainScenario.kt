@@ -48,7 +48,7 @@ object MainScenario : Scenario() {
                     action {
                         val cailaName = activator.caila?.entities?.find { it.entity == "Names" }?.value
                         if (cailaName != null) {
-                            context.client["ClientName"] = JsonPrimitive(cailaName)
+                            context.client["ClientName"] = cailaName
                         }
                         if (context.client["ClientName"] != null) {
                             context.client["bar"] = context.client["bar"] as Int + 16
@@ -65,10 +65,10 @@ object MainScenario : Scenario() {
                             )
                             reactions.go("/Level")
                         } else {
-                            context.temp["name"] = JsonPrimitive(request.input)
+                            context.session["name"] = request.input
                             reactions.sayRandom(
-                                "Are you really have name " + context.temp["name"] + "?",
-                                "Are you really " + context.temp["name"] + "?"
+                                "Are you really have name " + context.session["name"] + "?",
+                                "Are you really " + context.session["name"] + "?"
                             )
                         }
                     }
@@ -77,7 +77,7 @@ object MainScenario : Scenario() {
                             intent("Yes")
                         }
                         action {
-                            context.client["ClientName"] = context.temp["name"]
+                            context.client["ClientName"] = context.session["name"]
                             reactions.go("/Greetings/Name/Names")
                         }
                     }
