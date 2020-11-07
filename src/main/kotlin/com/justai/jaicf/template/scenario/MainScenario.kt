@@ -18,13 +18,15 @@ object MainScenario : Scenario() {
                         "Hello! How can I help?",
                         "Hi there! How can I help you?"
                     )
-                    // response = {"image": "Smile"};
                     buttons(
                         "Help me!",
                         "How are you?",
                         "What is your name?"
                     )
                 }
+                //reactions.aimybox {
+                //    image = "sad"
+                //}
             }
         }
 
@@ -54,15 +56,22 @@ object MainScenario : Scenario() {
             }
         }
 
-        state("bye") {
+        state("help") {
             activators {
-                intent("Bye")
+                regex("/help")
+                regex("/menu")
+                intent("Help")
             }
 
             action {
                 reactions.sayRandom(
-                    "See you soon!",
-                    "Bye-bye!"
+                    "I can that:",
+                    "To control:"
+                )
+                reactions.say(
+                    "1. \"\\start \" to go to start" +
+                            "\n 2. \"\\help\" to get some information" +
+                            "\n 3. \"\\reset\" to start a new game"
                 )
                 reactions.image("https://media.giphy.com/media/EE185t7OeMbTy/source.gif")
             }
