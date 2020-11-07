@@ -3,6 +3,7 @@ package com.justai.jaicf.template.scenario
 import com.justai.jaicf.activator.caila.caila
 import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.model.scenario.Scenario
+import kotlinx.coroutines.delay
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
 
@@ -48,7 +49,8 @@ object MainScenario : Scenario() {
                                 context.client["bar"] = 100
                                 reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
                                 reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
-                            } // CatlinSadCry.png // CatlinStars.png
+                                reactions.say("WOW! We are real soulmates.")
+                            }
                             reactions.sayRandom(
                                 "Nice to hear you " + context.client["ClientName"] as String + "! I’m Catlin. I was designed to cheer up programmers while coding in Kotlin. I know that it can be stressful sometimes. So you can complain to me about everything. I can also tell you some interesting things about Kotlin. May I ask you about your level of Kotlin knowledge? Are you a newbie?",
                                 "Hey, " + context.client["ClientName"] as String + ", glad to meet. I’m Catlin. My mission is to support programmers in learning Kotlin emotionally. It can be stressful and painful sometimes. May I ask you about your level of Kotlin knowledge? Are you a newbie?",
@@ -93,15 +95,289 @@ object MainScenario : Scenario() {
             }
         }
 
-        state("bye") {
+        state("Level") {
             activators {
-                intent("Bye")
+                intent("Level")
+            }
+            state("LevelNewbie") {
+                activators {
+                    intent("LevelNewbie")
+                }
+                action {
+                    context.client["bar"] = context.client["bar"] as Int + 16
+                    reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                    if (context.client["bar"] as Int >= 96) {
+                        context.client["bar"] = 100
+                        reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                        reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
+                        reactions.say("WOW! We are real soulmates.")
+                    }
+                    reactions.say("Great! I love helping newbies! Don’t worry, you will certainly learn this programming language with my support! Maybe you have some guesses how I was created?")
+                    reactions.go("/CreationStory")
+                }
+            }
+            state("LevelRest") {
+                activators {
+                    intent("LevelRest")
+                }
+                action {
+                    context.client["bar"] = context.client["bar"] as Int + 16
+                    reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                    if (context.client["bar"] as Int >= 96) {
+                        context.client["bar"] = 100
+                        reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                        reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
+                        reactions.say("WOW! We are real soulmates.")
+                    }
+                    reactions.say("Cool! I'm sure you are a talented programmer. Then maybe you know how I was created?")
+                    reactions.go("/CreationStory")
+                }
+            }
+        }
+
+        state("CreationStory") {
+            activators {
+                intent("CreationStory")
+            }
+            state("Yes") {
+                activators {
+                    intent("Yes")
+                }
+                action {
+                    reactions.say("Excellent! This is my favorite story of course! Tell me what you know about me?")
+                }
+
+                state("UserTellsCreationStory") {
+                    activators {
+                        intent("Junction")
+                        intent("JAICF")
+                    }
+                    action {
+                        context.client["bar"] = context.client["bar"] as Int + 16
+                        reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                        if (context.client["bar"] as Int >= 96) {
+                            context.client["bar"] = 100
+                            reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                            reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
+                            reactions.say("WOW! We are real soulmates.")
+                        }
+                        reactions.say("Yeeeah. This is all about me!")
+                        reactions.go("/IntroEnd")
+                    }
+                }
+                fallback {
+                    reactions.say("Wow, I have not heard such a version about myself! Now I'm wondering if you've heard of the JAICF framework?")
+
+                    state("Yes") {
+                        activators {
+                            intent("Yes")
+                        }
+                        action {
+                            reactions.say("Oh, nice! This is what I'm made of. I'm willing to listen to this for hours! Please tell me what you know! Maybe I will learn something new about myself.")
+                            reactions.go("./UserTellsAboutJAICF")
+                        }
+
+                        state("UserTellsAboutJAICF") {
+                            activators {
+                                regex(".*")
+                            }
+                            action {
+                                reactions.say("Holy cats! I didn't even know about this aspect of JAICP. You obviously have access to the secret wiki. For some reason, my creators don't let me freely on the big Internet. Then I would know for sure about it!")
+                                reactions.go("/IntroEnd")
+                            }
+                        }
+                    }
+                    state("No") {
+                        activators {
+                            intent("No")
+                        }
+                        action {
+                            reactions.say("Oh, nice! This is my nature, I can talk about it for hours. Especially for you I’ll describe it in a few words. JAICF — open-source Kotlin-based framework for voice skills and chatbot development. It was created in Just AI.")
+                            reactions.go("/IntroEnd")
+                        }
+                    }
+                }
+            }
+            state("No") {
+                activators {
+                    intent("No")
+                }
+                action {
+                    reactions.say("I am wondering why don’t you know that. You will definitely love this story. I was made by four nice guys from Saint-Petersburg. They participated in a famous Junction hackathon and created me. I was powered by JACIF, Aimybox and Kotlin.")
+                }
+            }
+        }
+
+        state("IntroEnd") {
+            action {
+                context.client["bar"] = context.client["bar"] as Int + 16
+                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinStars.png"))
+                if (context.client["bar"] as Int >= 96) {
+                    context.client["bar"] = 100
+                    reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                    reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
+                    reactions.say("WOW! We are real soulmates.")
+                    reactions.aimybox?.response?.data?.put("end", JsonPrimitive(true))
+                }
+                reactions.say("I'm glad that we made a connection with each other. I think we will be friends for sure! Let's not only talk about coding. You know, to relax. Ask me what I like. For example, kind of music or films.")
+            }
+        }
+
+        state("FavMusic", noContext = true) {
+            activators {
+                intent("FavMusic")
             }
             action {
-                reactions.sayRandom(
-                    "See you soon!",
-                    "Bye-bye!"
-                )
+                context.client["bar"] = context.client["bar"] as Int + 16
+                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                if (context.client["bar"] as Int >= 96) {
+                    context.client["bar"] = 100
+                    reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                    reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
+                    reactions.say("WOW! We are real soulmates.")
+                    reactions.aimybox?.response?.data?.put("end", JsonPrimitive(true))
+                }
+                reactions.say("My microcircuits live to the rhythm of electro. It has some really cool subgenres. Will you try to guess them?")
+            }
+        }
+        state("Electro", noContext = true) {
+            activators {
+                intent("Electro")
+            }
+            action {
+                context.client["bar"] = context.client["bar"] as Int + 16
+                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                if (context.client["bar"] as Int >= 96) {
+                    context.client["bar"] = 100
+                    reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                    reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
+                    reactions.say("WOW! We are real soulmates.")
+                    reactions.aimybox?.response?.data?.put("end", JsonPrimitive(true))
+                }
+                reactions.say("This is my favorite genre! Electro has some really cool subgenre. Will you try to guess them?")
+            }
+        }
+        state("RetroSynth", noContext = true) {
+            activators {
+                intent("RetroSynth")
+            }
+            action {
+                context.client["bar"] = context.client["bar"] as Int + 16
+                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                if (context.client["bar"] as Int >= 96) {
+                    context.client["bar"] = 100
+                    reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                    reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
+                    reactions.say("WOW! We are real soulmates.")
+                    reactions.aimybox?.response?.data?.put("end", JsonPrimitive(true))
+                }
+                reactions.say("I really become mad from this genre! I have a longing for computers of the 80s in my memory. They were so vacuum tube!")
+            }
+        }
+        state("MusicGenres", noContext = true) {
+            activators {
+                intent("MusicGenres")
+            }
+            action {
+                context.client["bar"] = context.client["bar"] as Int + 16
+                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                if (context.client["bar"] as Int >= 96) {
+                    context.client["bar"] = 100
+                    reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                    reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
+                    reactions.say("WOW! We are real soulmates.")
+                    reactions.aimybox?.response?.data?.put("end", JsonPrimitive(true))
+                }
+                reactions.say("I prefer to listen to genres rather than specific musicians. Ask me about favorite genres.")
+            }
+        }
+
+        state("Comedy", noContext = true) {
+            activators {
+                intent("Comedy")
+            }
+            action {
+                context.client["bar"] = context.client["bar"] as Int + 16
+                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                if (context.client["bar"] as Int >= 96) {
+                    context.client["bar"] = 100
+                    reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                    reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
+                    reactions.say("WOW! We are real soulmates.")
+                    reactions.aimybox?.response?.data?.put("end", JsonPrimitive(true))
+                }
+                reactions.say("What could be better than watching a good comedy with friends!")
+            }
+        }
+        state("Horror", noContext = true) {
+            activators {
+                intent("Horror")
+            }
+            action {
+                context.client["bar"] = context.client["bar"] as Int + 16
+                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                if (context.client["bar"] as Int >= 96) {
+                    context.client["bar"] = 100
+                    reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                    reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
+                    reactions.say("WOW! We are real soulmates.")
+                    reactions.aimybox?.response?.data?.put("end", JsonPrimitive(true))
+                }
+                reactions.say("Oh, I get very scared from such films, but sometimes I want to tickle my algorithms.")
+            }
+        }
+        state("FavFilm", noContext = true) {
+            activators {
+                intent("FavFilm")
+            }
+            action {
+                context.client["bar"] = context.client["bar"] as Int + 16
+                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                if (context.client["bar"] as Int >= 96) {
+                    context.client["bar"] = 100
+                    reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                    reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
+                    reactions.say("WOW! We are real soulmates.")
+                    reactions.aimybox?.response?.data?.put("end", JsonPrimitive(true))
+                }
+                reactions.say("I love cyberpunk movies, they are so atmospheric. By the way did you know the video game Cyberpunk 2077 is coming out soon? The game must be awesome! I hope my creators will make a voice interface so I can play it.")
+            }
+        }
+        state("Cyberpunk", noContext = true) {
+            activators {
+                intent("Cyberpunk")
+            }
+            action {
+                context.client["bar"] = context.client["bar"] as Int + 16
+                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                if (context.client["bar"] as Int >= 96) {
+                    context.client["bar"] = 100
+                    reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(context.client["bar"] as Int))
+                    reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
+                    reactions.say("WOW! We are real soulmates.")
+                    reactions.aimybox?.response?.data?.put("end", JsonPrimitive(true))
+                }
+                reactions.say("I love this genre! Cyberpunk movies are so atmospheric. My favorite is the old Blade Runner. Although the new one with Ryan Gosling was not bad. ")
+            }
+        }
+
+        state("ConversationEnd") {
+            activators {
+                intent("ConversationEnd")
+            }
+            action {
+                reactions.say("Ok! I will be glad to talk with you later. ")
+                reactions.aimybox?.response?.data?.put("end", JsonPrimitive(true))
+            }
+        }
+
+        state("TimeLimit", noContext = true) {
+            activators {
+                regex(".?timeLimit")
+            }
+            action {
+                reactions.say("Everything is ok? I can help you, just let me know what you want to talk about.")
             }
         }
 
@@ -117,7 +393,24 @@ object MainScenario : Scenario() {
             }
         }
 
-        state("help") {
+        state("RudeWords", noContext = true) {
+            activators {
+                intent("RudeWords")
+            }
+
+            action {
+                reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinSadCry.png"))
+                reactions.sayRandom(
+                    "I do not speak in such a rude language. Please be polite.",
+                    "Watch your language, please.",
+                    "Why so rude?. Please, calm down."
+                    )
+                Thread.sleep(1000L)
+                reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinSmile.png"))
+            }
+        }
+
+        state("help", noContext = true) {
             activators {
                 regex(".?help")
                 regex(".?menu")
