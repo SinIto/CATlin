@@ -18,7 +18,7 @@ object MainScenario : Scenario() {
                         "Hello! How can I help?",
                         "Hi there! How can I help you?"
                     )
-                    $response.data.image = "Smile";
+                    // response = {"image": "Smile"};
                     buttons(
                         "Help me!",
                         "How are you?",
@@ -75,4 +75,3 @@ object MainScenario : Scenario() {
             )
         }
     }
-}
