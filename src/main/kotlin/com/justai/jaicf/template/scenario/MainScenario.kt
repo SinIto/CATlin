@@ -5,6 +5,7 @@ import com.justai.jaicf.activator.caila.caila
 import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.context.BotContext
 import com.justai.jaicf.model.scenario.Scenario
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.json
 
@@ -30,6 +31,9 @@ object MainScenario : Scenario() {
                 intent("Greetings")
             }
             action {
+                if (context.client["ClientName"] != null){
+                    reactions.go("/Names")
+                }
                 reactions.run {
                     // image("https://media.giphy.com/media/ICOgUNjpvO0PC/source.gif")
                     sayRandom(
@@ -43,12 +47,13 @@ object MainScenario : Scenario() {
                     //     "What is your name?"
                     // )
                 }
+                context.client["bar"] = 0
                 // reactions.aimybox?.response?.data?.put("key", json { "some nested key" to "some nested value" })
                 reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinSmile.png"))
                 // CatlinSadCry.png
                 // CatlinStars.png
                 // CatlinHearts.png
-                reactions.aimybox?.response?.data?.put("bar", JsonPrimitive(0))
+                reactions.aimybox?.response?.data?.put("bar", context.client["bar"] as JsonElement)
             }
 
             state("Names") {
@@ -62,6 +67,13 @@ object MainScenario : Scenario() {
                         context.client["ClientName"] = JsonPrimitive(cailaName)
                     }
                     if (context.client["ClientName"] != null){
+                        context.client["bar"] = this.context.client["bar"] + 16
+                        reactions.aimybox?.response?.data?.put("bar", context.client["bar"] as JsonElement)
+                        if (context.client["bar"] >= 96) {
+                            context.client["bar"] = 100
+                            reactions.aimybox?.response?.data?.put("bar", context.client["bar"] as JsonElement)
+                            reactions.aimybox?.response?.data?.put("pic", JsonPrimitive("CatlinHearts.png"))
+                        } // CatlinSadCry.png // CatlinStars.png
                         reactions.sayRandom(
                             "Nice to hear you "  + context.client["ClientName"] + "! I’m Catlin. I was designed to cheer up programmers while coding in Kotlin. I know that it can be stressful sometimes. So you can complain to me about everything. I can also tell you some interesting things about Kotlin. May I ask you about your level of Kotlin knowledge? Are you a newbie?",
                             "Hey, "  + context.client["ClientName"] + ", glad to meet. I’m Catlin. My mission is to support programmers in learning Kotlin emotionally. It can be stressful and painful sometimes. May I ask you about your level of Kotlin knowledge? Are you a newbie?",
