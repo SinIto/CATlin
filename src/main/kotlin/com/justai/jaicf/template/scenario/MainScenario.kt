@@ -33,8 +33,9 @@ object MainScenario : Scenario() {
                 reactions.run {
                     // image("https://media.giphy.com/media/ICOgUNjpvO0PC/source.gif")
                     sayRandom(
-                        "Hello! How can I help?",
-                        "Hi there! How can I help you?"
+                        "Hello! You opened me! That means that you are a Kotlin developer or interested in Kotlin. What is your name?",
+                        "Hi! I am glad to see you! I think you are interested in Kotlin or a newbie in JAICF! What is your name?",
+                        "Here you are! Do you like programming or are interested in Kotlin  or JAICF? Me too. What is your name?"
                     )
                     // buttons(
                     //     "Help me!",
@@ -148,7 +149,23 @@ object MainScenario : Scenario() {
                             "\n 2. \"\\help\" to get some information" +
                             "\n 3. \"\\reset\" to start a new game"
                 )
-                reactions.image("https://media.giphy.com/media/EE185t7OeMbTy/source.gif")
+                // reactions.image("https://media.giphy.com/media/EE185t7OeMbTy/source.gif")
+            }
+        }
+
+        state("reset") {
+            activators {
+                regex(".reset")
+                intent("Reset")
+            }
+
+            action {
+                context.client["ClientName"] = null
+                reactions.sayRandom(
+                    "Ok, again.",
+                    "Go to the start!"
+                )
+                reactions.go("/Greetings")
             }
         }
 
