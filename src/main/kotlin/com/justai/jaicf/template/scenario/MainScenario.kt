@@ -156,8 +156,8 @@ object MainScenario : Scenario() {
                     regex(".*")
                 }
                 action {
-                    reactions.say("Oh, nice! This is what I'm made of. I'm willing to listen to this for hours! Please tell me what you know! Maybe I will learn something new about myself.")
-                    reactions.go("./UserTellsAboutJAICF")
+                    //reactions.say("Oh, nice! This is what I'm made of. I'm willing to listen to this for hours! Please tell me what you know! Maybe I will learn something new about myself.")
+                    reactions.go("../Yes/fallbackF")
                 }
             }
             state("Yes") {
