@@ -156,8 +156,8 @@ object MainScenario : Scenario() {
                     regex(".*")
                 }
                 action {
-                    reactions.say("Holy cats! I didn't even know about this aspect of JAICP. You obviously have access to the secret wiki. For some reason, my creators don't let me freely on the big Internet. Then I would know for sure about it!")
-                    reactions.go("/IntroEnd")
+                    reactions.say("Oh, nice! This is what I'm made of. I'm willing to listen to this for hours! Please tell me what you know! Maybe I will learn something new about myself.")
+                    reactions.go("./UserTellsAboutJAICF")
                 }
             }
             state("Yes") {
@@ -187,9 +187,13 @@ object MainScenario : Scenario() {
                         reactions.go("/IntroEnd")
                     }
                 }
-                fallback {
-                    reactions.say("Wow, I have not heard such a version about myself! Now I'm wondering if you've heard of the JAICF framework?")
-
+                state("fallbackF") {
+                    activators {
+                        regex(".*")
+                    }
+                    action {
+                        reactions.say("Wow, I have not heard such a version about myself! Now I'm wondering if you've heard of the JAICF framework?")
+                    }
                     state("Yes") {
                         activators {
                             intent("Yes")
