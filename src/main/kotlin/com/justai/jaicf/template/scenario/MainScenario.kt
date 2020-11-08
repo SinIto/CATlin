@@ -120,6 +120,7 @@ object MainScenario : Scenario() {
             state("LevelRest") {
                 activators {
                     intent("LevelRest")
+                    intent("No")
                 }
                 action {
                     context.client["bar"] = context.client["bar"] as Int + 16
@@ -148,6 +149,15 @@ object MainScenario : Scenario() {
                 }
                 action {
                     reactions.go("../Yes/UserTellsCreationStory")
+                }
+            }
+            state("UserTellsAboutJAICF") {
+                activators {
+                    regex(".*")
+                }
+                action {
+                    reactions.say("Holy cats! I didn't even know about this aspect of JAICP. You obviously have access to the secret wiki. For some reason, my creators don't let me freely on the big Internet. Then I would know for sure about it!")
+                    reactions.go("/IntroEnd")
                 }
             }
             state("Yes") {
@@ -216,6 +226,7 @@ object MainScenario : Scenario() {
                 }
                 action {
                     reactions.say("I am wondering why don’t you know that. You will definitely love this story. I was made by four nice guys from Saint-Petersburg. They participated in a famous Junction hackathon and created me. I was powered by JACIF, Aimybox and Kotlin.")
+                    reactions.go("/IntroEnd")
                 }
             }
         }
