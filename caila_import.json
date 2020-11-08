@@ -348,6 +348,7 @@
   }, {
     "id" : 9755,
     "path" : "/ConversationEnd",
+    "answer" : "Goodbye then!",
     "enabled" : true,
     "shared" : false,
     "phrases" : [ {
@@ -387,7 +388,7 @@
   }, {
     "id" : 9527,
     "path" : "/Creators",
-    "answer" : "I was created by a team of talented programmers and linguists in Just AI.",
+    "answer" : "I was created by a team of talented programmers and linguists from Just AI.",
     "enabled" : true,
     "shared" : false,
     "phrases" : [ {
@@ -426,6 +427,12 @@
       "text" : "films about the future"
     }, {
       "text" : "movies about the future"
+    }, {
+      "text" : "Cyber punk film"
+    }, {
+      "text" : "Cyber punk movie"
+    }, {
+      "text" : "Cyber punk genre"
     } ],
     "patterns" : [ ]
   }, {
@@ -534,6 +541,8 @@
       "text" : "films you like"
     }, {
       "text" : "movies you like"
+    }, {
+      "text" : "favorite genre"
     } ],
     "patterns" : [ ]
   }, {
@@ -583,6 +592,7 @@
   }, {
     "id" : 8981,
     "path" : "/Greetings",
+    "answer" : "Hi",
     "enabled" : true,
     "shared" : false,
     "phrases" : [ {
@@ -946,6 +956,8 @@
       "text" : "for several days"
     }, {
       "text" : "I have little experience"
+    }, {
+      "text" : "I am interested in"
     } ],
     "patterns" : [ ]
   }, {
@@ -985,6 +997,18 @@
       "text" : "I am the god of programming"
     }, {
       "text" : "I am an expert in language"
+    }, {
+      "text" : "I know Kotlin"
+    }, {
+      "text" : "I am middle programmer"
+    }, {
+      "text" : "Seniour"
+    }, {
+      "text" : "I have an middle level"
+    }, {
+      "text" : "I'm middle"
+    }, {
+      "text" : "I'm master"
     } ],
     "patterns" : [ ]
   }, {
@@ -1016,19 +1040,21 @@
     "phrases" : [ {
       "text" : "genres"
     }, {
-      "text" : "favourit specific musicians"
-    }, {
-      "text" : "what genres do you prefer"
-    }, {
       "text" : "what singers do you listen"
     }, {
-      "text" : "favourite singers"
+      "text" : "music"
     }, {
-      "text" : "favourite song"
+      "text" : "band"
     }, {
-      "text" : "favourite group"
+      "text" : "group"
     }, {
-      "text" : "favourite band"
+      "text" : "band"
+    }, {
+      "text" : "song"
+    }, {
+      "text" : "singer"
+    }, {
+      "text" : "musician"
     } ],
     "patterns" : [ ]
   }, {
@@ -1102,6 +1128,7 @@
   }, {
     "id" : 9398,
     "path" : "/No",
+    "answer" : "Okay. So what?",
     "enabled" : true,
     "shared" : false,
     "phrases" : [ {
@@ -1285,7 +1312,7 @@
   }, {
     "id" : 9756,
     "path" : "/Thanksgiving",
-    "answer" : "Oh, you are welcome!",
+    "answer" : "Yep, good!",
     "enabled" : true,
     "shared" : false,
     "phrases" : [ {
@@ -1316,13 +1343,30 @@
     "enabled" : true,
     "shared" : false,
     "phrases" : [ {
-      "text" : "@UserStory"
+      "text" : "You were made using @JAICF during @Junction"
+    }, {
+      "text" : "You were created using @JAICF during @Junction"
+    }, {
+      "text" : "At @Junction, you were created using @JAICF"
+    }, {
+      "text" : "Your creators participated in @Junction. They used @JAICF"
+    }, {
+      "text" : "Your creators participated in @Junction"
+    }, {
+      "text" : "You were created using @JAICF"
+    }, {
+      "text" : "You were made using @JAICF "
     } ],
     "patterns" : [ ],
     "slots" : [ {
-      "name" : "UserStory",
-      "entity" : "UserStory",
-      "required" : true,
+      "name" : "JAICF",
+      "entity" : "JAICF",
+      "required" : false,
+      "prompts" : [ ]
+    }, {
+      "name" : "Junction",
+      "entity" : "Junction",
+      "required" : false,
       "prompts" : [ ]
     } ]
   }, {
@@ -1388,7 +1432,7 @@
   }, {
     "id" : 9438,
     "path" : "/WorstThing",
-    "answer" : "I sympathize with you. Tell me more about this. ",
+    "answer" : "Oh, tell me more about this. ",
     "enabled" : true,
     "shared" : false,
     "phrases" : [ {
@@ -1403,11 +1447,14 @@
       "text" : "the bad thing happend"
     }, {
       "text" : "shit happend"
+    }, {
+      "text" : "I have question"
     } ],
     "patterns" : [ ]
   }, {
     "id" : 9397,
     "path" : "/Yes",
+    "answer" : "Yay!",
     "enabled" : true,
     "shared" : false,
     "phrases" : [ {
@@ -1436,6 +1483,10 @@
       "text" : "ye"
     }, {
       "text" : "yee"
+    }, {
+      "text" : "yep"
+    }, {
+      "text" : "Yeh"
     } ],
     "patterns" : [ ]
   } ],
@@ -22342,31 +22393,6 @@
       "id" : 133269,
       "type" : "synonyms",
       "rule" : [ "Russian Linguists", "Linguists" ],
-      "value" : ""
-    } ]
-  }, {
-    "entity" : {
-      "id" : 7777,
-      "name" : "UserStory",
-      "enabled" : true,
-      "shared" : false,
-      "type" : "annotation",
-      "priority" : 1,
-      "noSpelling" : true,
-      "noMorph" : false,
-      "phoneticSearch" : false,
-      "fuzzySearch" : false,
-      "client" : false
-    },
-    "records" : [ {
-      "id" : 137853,
-      "type" : "synonyms",
-      "rule" : [ "JAICF", "Just AI Conversational Framework", "JAICF framework" ],
-      "value" : ""
-    }, {
-      "id" : 137854,
-      "type" : "synonyms",
-      "rule" : [ "Junction", "Junction hackathon", "hackathon" ],
       "value" : ""
     } ]
   }, {
